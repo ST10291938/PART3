@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,13 @@ namespace PART3.Controllers
     public class LecturersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public LecturersController(ApplicationDbContext context)
+
+        public LecturersController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Lecturers
@@ -54,10 +58,38 @@ namespace PART3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,lecture_ID,lecturer_Name,lecturer_Surname,lecturer_Email,lecturer_Contact,Program,Module_Code,Hours_Worked,Hourly_Rate,Date_Of_Session,UploadedFileName,Status")] Lecturer lecturer)
+        public async Task<IActionResult> Create([Bind("Id,lecture_ID,lecturer_Name,lecturer_Surname,lecturer_Email,lecturer_Contact,Program,Module_Code,Hours_Worked,Hourly_Rate,Date_Of_Session,UploadedFileName,Status")] Lecturer lecturer, IFormFile? uploadedFileName)
         {
             if (ModelState.IsValid)
             {
+                // Handle the file upload if a file was submitted
+                if (uploadedFileName != null)
+                {
+                    // Set the directory path for file storage
+                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+
+                    // Ensure the directory exists
+                    Directory.CreateDirectory(uploadsFolder);
+
+                    // Generate a unique file name to prevent conflicts
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(uploadedFileName.FileName);
+
+                    // Get the full path to save the file
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Copy the uploaded file to the target location
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await uploadedFileName.CopyToAsync(fileStream);
+                    }
+
+                    // Set the file path in the model
+                    lecturer.UploadedFileName = uniqueFileName;
+                }
+
+
+
+
                 lecturer.Status = "Pending";
 
 

@@ -27,6 +27,7 @@ namespace PART3.Models
         public DateTime Date_Of_Session { get; set; }
         // public IFormFile UploadedFile { get; set; }
         public string UploadedFileName { get; set; }
+        public decimal Total_Payment => Hours_Worked * Hourly_Rate;
 
         public string? Status { get; set; }
     }
