@@ -190,45 +190,6 @@ namespace PART3.Controllers
             return _context.Lecturers.Any(e => e.Id == id);
         }
 
-        /*
-        // GET: Lecturers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var lecturer = await _context.Lecturers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (lecturer == null)
-            {
-                return NotFound();
-            }
-
-            return View(lecturer);
-        }
-
-        // POST: Lecturers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var lecturer = await _context.Lecturers.FindAsync(id);
-            if (lecturer != null)
-            {
-                _context.Lecturers.Remove(lecturer);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool LecturerExists(int id)
-        {
-            return _context.Lecturers.Any(e => e.Id == id);
-        }
-    }
-        */
+      
     }
 }
