@@ -4,14 +4,18 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Lecturers Claims List</h1>
+<h1 class="text-center mb-4">Lecturers Claims List</h1>
 
 <p>
-    <a asp-action="Create">Lodge New Claim</a>
+    <a asp-action="Create" class="btn btn-success mb-3">
+        <i class="fas fa-plus"></i> Lodge New Claim
+    </a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
+<div class="table-responsive">
+
+    <table class="table table-striped table-hover table-bordered align-middle">
+        <thead class="table-primary text-center">
+            <tr>
             <th>
                 @Html.DisplayNameFor(model => model.lecture_ID)
             </th>
@@ -57,7 +61,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+                    <td class="text-center">
                 @Html.DisplayFor(modelItem => item.lecture_ID)
             </td>
             <td>
@@ -78,13 +82,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Module_Code)
             </td>
-            <td>
+            <td class="text-center">
                 @Html.DisplayFor(modelItem => item.Hours_Worked)
             </td>
-            <td>
+                    <td class="text-center">
                 @Html.DisplayFor(modelItem => item.Hourly_Rate)
             </td>
-                <td>
+                    <td class="text-center">
                     @Html.DisplayFor(modelItem => item.Total_Payment)
                 </td>
             <td>
@@ -94,8 +98,13 @@
                 @Html.DisplayFor(modelItem => item.UploadedFileName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
+                        <span class="badge
+                        @(item.Status == "Pending" ? "bg-warning text-dark" :
+                          item.Status == "Approved" ? "bg-success" :
+                          item.Status == "Rejected" ? "bg-danger" : "bg-secondary")">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </span>
+                    </td>
              </tr>
 }
 

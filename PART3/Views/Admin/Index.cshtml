@@ -8,7 +8,7 @@
 
 <div class="table-responsive">
     <table class="table table-bordered table-striped table-hover">
-        <thead class="thead-dark">
+        <thead class="table-dark text-center">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.lecture_ID)
@@ -92,8 +92,13 @@
                 @Html.DisplayFor(modelItem => item.UploadedFileName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
+                        <span class="badge
+                        @(item.Status == "Pending" ? "bg-warning text-dark" :
+                          item.Status == "Approved" ? "bg-success" :
+                          item.Status == "Rejected" ? "bg-danger" : "bg-secondary")">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </span>
+                    </td>
             <!--
             <td>
                     <a asp-action="Approve" asp-route-id="@item.Id">Approve</a> |
