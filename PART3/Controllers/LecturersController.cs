@@ -50,6 +50,8 @@ namespace PART3.Controllers
         // GET: Lecturers/Create
         public IActionResult Create()
         {
+
+
             return View();
         }
 

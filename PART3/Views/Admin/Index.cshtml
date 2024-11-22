@@ -105,9 +105,11 @@
                 <td>
                     @if (item.Status == "Pending") 
                     {
-                        <a asp-action="Approve" asp-route-id="@item.Id" class="btn btn-sm btn-approve">Approve</a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-approve">Details</a>
-                        <a asp-action="Reject" asp-route-id="@item.Id" class="btn btn-sm btn-reject">Reject</a>
+                        <div class="d-block">
+                            <a asp-action="Approve" asp-route-id="@item.Id" class="btn btn-success btn-sm mb-2">Approve</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm mb-2">Details</a>
+                            <a asp-action="Reject" asp-route-id="@item.Id" class="btn btn-danger btn-sm mb-2">Reject</a>
+                        </div>
                     }
                     else
                     {
