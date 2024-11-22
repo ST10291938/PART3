@@ -4,11 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Human Resurces Management</h1>
+<h1 class="text-center mb-4">Human Resurces Management</h1>
 
-
-<table class="table">
-    <thead>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover align-middle">
+        <thead class="table-dark text-center">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.lecture_ID)
@@ -55,7 +55,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+                    <td class="text-center">
                 @Html.DisplayFor(modelItem => item.lecture_ID)
             </td>
             <td>
@@ -76,13 +76,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Module_Code)
             </td>
-            <td>
+                    <td class="text-center">
                 @Html.DisplayFor(modelItem => item.Hours_Worked)
             </td>
-            <td>
+                    <td class="text-center">
                 @Html.DisplayFor(modelItem => item.Hourly_Rate)
             </td>
-                <td>
+                    <td class="text-center">
                     @Html.DisplayFor(modelItem => item.Total_Payment)
                 </td>
             <td>
@@ -92,8 +92,14 @@
                 @Html.DisplayFor(modelItem => item.UploadedFileName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
+                        <span class="badge
+                        @(item.Status == "Pending" ? "bg-warning text-dark" :
+                          item.Status == "Approved" ? "bg-success" :
+                          item.Status == "Rejected" ? "bg-danger" : "bg-secondary")">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </span>
+                    </td>
+                   
             <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm mb-2" style="text-decoration: none;">
                         <i class="fas fa-edit"></i> Edit
@@ -104,6 +110,12 @@
         </tr>
 }
     </tbody>
-    <a asp-action="GenerateReport" class="btn btn-primary">Download Report</a>
-
+      
 </table>
+</div>
+
+    <div class="text-center mt-4">
+        <a asp-action="GenerateReport" class="btn btn-primary">
+            <i class="fas fa-download"></i> Download Report
+        </a>
+    </div>
