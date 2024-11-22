@@ -87,10 +87,26 @@ namespace PART3.Controllers
                     lecturer.UploadedFileName = uniqueFileName;
                 }
 
+                lecturer.Status = AutoApproveClaim(lecturer);
+
+
+                if (lecturer.Hours_Worked > 8) // max hours per day
+                {
+                    lecturer.Status = "Rejected";
+                    TempData["Message"] = "Claim rejected: Exceeds maximum allowed hours.";
+                }
+                else if (lecturer.Hourly_Rate > 300) //Max hourly rate
+                {
+                    lecturer.Status = "Rejected";
+                    TempData["Message"] = "Claim rejected: Hourly rate above max rate.";
+                }
+                else
+                {
+                    lecturer.Status = "Pending"; // Pass initial checks
+                }
 
 
 
-                lecturer.Status = "Pending";
 
 
                 _context.Add(lecturer);
@@ -180,6 +196,8 @@ namespace PART3.Controllers
                         throw;
                     }
                 }
+                lecturer.Status = AutoApproveClaim(lecturer);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(lecturer);
@@ -190,6 +208,17 @@ namespace PART3.Controllers
             return _context.Lecturers.Any(e => e.Id == id);
         }
 
-      
+
+     
+
+
+        private string AutoApproveClaim(Lecturer lecturer)
+        {
+            if (lecturer.Hours_Worked <= 8 && lecturer.Hourly_Rate <= 300)
+            {
+                return "Approved";
+            }
+            return "Pending";
+        }
     }
 }
