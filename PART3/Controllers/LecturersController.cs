@@ -87,7 +87,6 @@ namespace PART3.Controllers
                     lecturer.UploadedFileName = uniqueFileName;
                 }
 
-                lecturer.Status = AutoApproveClaim(lecturer);
 
 
                 if (lecturer.Hours_Worked > 8) // max hours per day
@@ -104,7 +103,6 @@ namespace PART3.Controllers
                 {
                     lecturer.Status = "Pending"; // Pass initial checks
                 }
-
 
 
 
@@ -196,7 +194,6 @@ namespace PART3.Controllers
                         throw;
                     }
                 }
-                lecturer.Status = AutoApproveClaim(lecturer);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -209,16 +206,10 @@ namespace PART3.Controllers
         }
 
 
-     
 
 
-        private string AutoApproveClaim(Lecturer lecturer)
-        {
-            if (lecturer.Hours_Worked <= 8 && lecturer.Hourly_Rate <= 300)
-            {
-                return "Approved";
-            }
-            return "Pending";
-        }
+
+       
+
     }
 }
